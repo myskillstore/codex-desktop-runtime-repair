@@ -21,13 +21,31 @@ Fix Codex on Windows when GPT-5.6 or newer models do not appear after an update 
 - 不会自动关闭 Codex、修改配置、重命名文件夹、删除缓存、安装软件或读取认证信息。
 - 不应替代官方支持渠道；如果新模型在当前 CLI 和其他官方客户端中也不存在，应优先确认服务端可用性与账号权限。
 
+## 先更新 CLI，再判断是否需要修复桌面端
+
+对于本问题，`codex-cli 0.144.3` 或更高可作为 GPT-5.6 CLI 支持的已知基线，但不等于账号一定有该模型，也不等于 Codex Desktop 已更新。请以 CLI 自己的模型列表为准。
+
+用户可以先手动运行：
+
+```powershell
+codex update
+```
+
+如果它提示无法识别安装方式，请不要反复重试。按 [官方 Codex CLI 入门页](https://learn.chatgpt.com/docs/codex/cli#getting-started) 手动执行：
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"
+```
+
+更新后重新运行 `codex --version`，并在 CLI 中确认 GPT-5.6 是否实际可见。**即使 CLI 已是 `0.144.3` 或更高、且能使用 GPT-5.6，只要 Windows 桌面端菜单仍不显示它，就必须继续执行本 skill 的前端修复：先按时间戳备份旧 runtime/cache，再让 Desktop 重新生成。**
+
 ## 安全原则
 
 这个 skill 的修复部分必须由用户手动执行。每个可能改变本地状态的操作都遵循：
 
 1. 先保存交接说明到 Codex 外部的文本文件。
 2. 用户手动完全退出 Codex Desktop。
-3. 先按时间戳重命名为备份，再让应用重新生成 runtime 或缓存。
+3. CLI 已更新但 Desktop 仍缺模型时，先按时间戳重命名为备份，再让应用重新生成 runtime 或缓存。
 4. 每一步先给出回滚命令，再给出修复命令。
 5. 绝不触碰认证文件、令牌、聊天记录或凭据。
 

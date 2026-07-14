@@ -26,7 +26,31 @@ Look for more than one `codex.exe` location and compare versions. A newer comman
 
 重点查看是否存在多个 `codex.exe` 路径，以及它们的版本是否不同。PATH 上的新版命令不等于桌面端正在使用新版 runtime。
 
-## 3. Mandatory Handoff Note / 必须保存交接说明
+## 3. Optional Standalone CLI Update / 可选：更新独立 CLI
+
+For this workflow, `codex-cli 0.144.3` or later is a known GPT-5.6 CLI baseline. It does not grant model access and it does not update Codex Desktop's local runtime. Confirm that GPT-5.6 is actually visible in the standalone CLI before treating the CLI update as successful.
+
+在本流程中，`codex-cli 0.144.3` 或更高可作为 GPT-5.6 CLI 支持的已知基线。它不能开通模型权限，也不会更新 Codex Desktop 的本地 runtime。只有当独立 CLI 中实际能看到 GPT-5.6 时，才算 CLI 更新完成。
+
+First try the CLI's own updater manually:
+
+```powershell
+codex update
+```
+
+If it succeeds, run `codex --version` and inspect the CLI model list again. If it reports that it cannot detect the installation method, do not repeat the command. Use the official Windows standalone installer instead:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"
+```
+
+如果 `codex update` 成功，重新运行 `codex --version` 并再次查看 CLI 模型列表。如果它提示无法识别安装方式，不要反复重试；改用上面的官方 Windows standalone 安装命令。
+
+**Continue to the next section when the updated standalone CLI can list GPT-5.6 but the Windows Codex Desktop model picker still cannot. This is the expected branch for a stale Desktop runtime/cache mismatch.**
+
+**当更新后的独立 CLI 已能列出 GPT-5.6、但 Windows Codex Desktop 菜单仍不能列出时，必须继续下一节。这正是 Desktop runtime/cache 过旧或不同步的典型分支。**
+
+## 4. Mandatory Handoff Note / 必须保存交接说明
 
 Before closing Codex, create a text file outside the Codex app. Copy into it:
 
@@ -39,7 +63,7 @@ Do not continue until the note is saved. The next phase requires fully exiting C
 
 在退出 Codex 前，不要跳过此步骤。下一阶段需要完全退出桌面端，此对话可能无法继续显示。
 
-## 4. Manually Exit and Verify / 手动退出并确认
+## 5. Manually Exit and Verify / 手动退出并确认
 
 Fully exit Codex Desktop, including any tray process, yourself. Open a new PowerShell window and inspect remaining processes:
 
@@ -51,7 +75,7 @@ If anything remains, close it manually through the application or Task Manager. 
 
 如果还有进程残留，请通过应用界面或任务管理器手动关闭。桌面端仍在运行时，不要进行后续操作。
 
-## 5. Back Up Before Refreshing / 刷新前先备份
+## 6. Back Up Before Refreshing / 刷新前先备份
 
 The following default locations are common but not universal. Use the diagnostic output and inspect the paths before replacing anything. Never rename or remove an authentication file.
 
@@ -95,7 +119,7 @@ If any path or backup name differs from the handoff note, stop and correct the n
 
 若路径或备份名称与交接说明不一致，请停止并先更新说明。
 
-## 6. Regenerate and Verify / 重新生成并验证
+## 7. Regenerate and Verify / 重新生成并验证
 
 Open Codex Desktop manually. Allow it to recreate its runtime/cache if it prompts for repair or installation. Then inspect the model picker.
 

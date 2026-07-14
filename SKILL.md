@@ -27,17 +27,21 @@ Never substitute your own process control for this handoff.
 ## Workflow
 
 1. Read `references/recovery-workflow.md` before giving repair instructions.
-2. Establish that the symptom is local: newer models appear in a newer standalone CLI or another known-good Codex client, but not in Windows Codex Desktop.
-3. Run the read-only diagnostics and identify whether multiple `codex.exe` locations or mismatched versions exist.
-4. Use the Required Handoff Gate.
-5. Give one manual phase at a time: exit, verify no processes remain, rename a dated backup, reopen Codex, verify the regenerated runtime, then inspect the model picker.
-6. Before each manual rename, show the exact rollback command that restores the dated backup.
-7. Stop if the user cannot identify a stale runtime/cache, lacks a backup, sees an access error, or the model is also absent from a current CLI. Explain that this points to installation, rollout, account entitlement, or service availability rather than a local cache mismatch.
+2. Run the read-only diagnostics and identify whether multiple `codex.exe` locations or mismatched versions exist.
+3. If the standalone CLI is old, tell the user to update it manually. The user may try `codex update`; if it reports that the installation method cannot be detected, direct the user to the official Windows standalone installer command in `references/recovery-workflow.md`.
+4. Treat `codex-cli 0.144.3` or later as the known GPT-5.6 CLI baseline for this troubleshooting path, not as an entitlement guarantee. Confirm the CLI can actually list the newer model for the user's account.
+5. If the updated standalone CLI can list GPT-5.6 but Windows Codex Desktop still cannot, continue to the Desktop runtime/cache recovery. A standalone CLI update does not update the Codex Desktop runtime.
+6. Use the Required Handoff Gate.
+7. Give one manual phase at a time: exit, verify no processes remain, rename a dated backup, reopen Codex, verify the regenerated runtime, then inspect the model picker.
+8. Before each manual rename, show the exact rollback command that restores the dated backup.
+9. Stop if the user cannot identify a stale runtime/cache, lacks a backup, sees an access error, or the model is also absent from a current CLI. Explain that this points to installation, rollout, account entitlement, or service availability rather than a local cache mismatch.
 
 ## Quick Reference
 
 | Situation | Guidance |
 | --- | --- |
+| Older standalone CLI or `codex update` cannot detect its installation method | User updates the standalone CLI manually with the official installer, then verifies its version and model list. |
+| CLI is `0.144.3` or later and can list GPT-5.6, but Desktop cannot | Continue with the timestamped Desktop runtime/cache backup and regeneration flow. |
 | New CLI shows newer models, Desktop does not | Suspect Desktop runtime or model-cache mismatch. |
 | `where.exe codex` shows multiple locations | Compare every reported version; do not assume PATH controls Desktop. |
 | Desktop process is still open | User must close it manually before any rename. |
@@ -47,6 +51,7 @@ Never substitute your own process control for this handoff.
 ## Common Mistakes
 
 - Treating a standalone CLI update as a Desktop runtime update.
+- Stopping after the CLI sees GPT-5.6 while the Desktop model picker remains old.
 - Editing `config.toml` repeatedly while the Desktop app rewrites it.
 - Deleting a runtime/cache instead of renaming it to a timestamped backup.
 - Closing Codex before saving the next commands and rollback instructions.

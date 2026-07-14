@@ -21,13 +21,31 @@ This is a safety-first troubleshooting skill for Codex. It addresses a common lo
 - It never automatically closes Codex, edits configuration, renames folders, deletes caches, installs software, or reads authentication data.
 - It is not a substitute for official support. If newer models are absent from a current CLI and other official clients too, first verify account access and service availability.
 
+## Update the CLI First, Then Decide Whether Desktop Repair Is Needed
+
+For this issue, `codex-cli 0.144.3` or later is a known GPT-5.6 CLI baseline, but it is not an account-entitlement guarantee and does not mean Codex Desktop has updated. Confirm the model is actually visible in the CLI's own model list.
+
+The user can first try:
+
+```powershell
+codex update
+```
+
+If it reports that it cannot detect the installation method, do not retry it repeatedly. Follow the official [Codex CLI getting-started page](https://learn.chatgpt.com/docs/codex/cli#getting-started) and run this command manually:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://chatgpt.com/codex/install.ps1 | iex"
+```
+
+Run `codex --version` again and confirm whether GPT-5.6 is visible in the CLI. **Even when the CLI is `0.144.3` or later and can use GPT-5.6, continue with this skill's Desktop repair if the Windows Desktop model picker still does not show it: back up the old runtime/cache with a timestamp, then let Desktop regenerate it.**
+
 ## Safety Contract
 
 All repair actions are manual and follow this order:
 
 1. Save a handoff note outside Codex.
 2. Fully exit Codex Desktop manually.
-3. Rename the existing runtime or cache to a timestamped backup before allowing regeneration.
+3. When the CLI is updated but Desktop is still missing models, rename the existing runtime or cache to a timestamped backup before allowing regeneration.
 4. Show the rollback command before the repair command.
 5. Never touch authentication files, tokens, chats, or credentials.
 
