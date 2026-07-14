@@ -6,6 +6,8 @@
 
 Fix Codex on Windows when GPT-5.6 or newer models do not appear after an update by safely diagnosing desktop runtime, CLI, and model-cache version mismatches.
 
+> **Platform scope: Windows only.** Do not use this project's PowerShell commands, paths, runtime/cache repair steps, or rollback commands on macOS or Linux.
+
 This is a safety-first troubleshooting skill for Codex. It addresses a common local mismatch: a newer standalone CLI can see newer models while the Codex Desktop model picker stays old because Desktop is still using an older local runtime or model cache.
 
 ## What It Helps With

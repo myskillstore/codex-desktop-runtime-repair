@@ -6,6 +6,8 @@
 
 Fix Codex on Windows when GPT-5.6 or newer models do not appear after an update by safely diagnosing desktop runtime, CLI, and model-cache version mismatches.
 
+> **平台范围：仅适用于 Windows。** 不要在 macOS 或 Linux 上执行本项目中的 PowerShell 命令、路径、runtime/cache 修复步骤或回滚命令。
+
 这是一个面向 Codex 的安全排障 skill。它适用于一种常见情形：独立 CLI 已是较新版本并能看到新模型，但 Codex Desktop 的模型菜单仍停留在旧版本，因为桌面端仍在使用旧的本地 runtime 或模型缓存。
 
 ## 它能做什么

@@ -7,6 +7,8 @@ description: Use when Codex Desktop on Windows does not show GPT-5.6 or newer mo
 
 Guide a user through a manual, reversible recovery of a Windows Codex Desktop runtime or model-cache mismatch. This skill diagnoses local state; it cannot grant models that the user's account or service has not enabled.
 
+> **Platform scope: Windows only.** Do not use this skill's PowerShell commands, paths, runtime/cache repair steps, or rollback commands on macOS or Linux.
+
 ## Non-Negotiable Safety Boundary
 
 Do not perform state-changing repair actions yourself. Do not terminate Codex, rename runtime or cache folders, delete files, edit configuration, reinstall anything, or launch the app. Do not read, copy, display, back up, or modify authentication files, tokens, cookies, chat data, or credentials.
